@@ -7,21 +7,25 @@ Na windowsie `python3`, `python` albo `py` niewiem xd. Z `pip` analogicznie.
 
 Jeśli nie mamy venv:
 ```bash
-python -m pip install --user virtualenv
+$ python -m pip install --user virtualenv
 ```
 
 W katologu servera:
 ```bash
-python -m venv venv
+$ python -m venv venv
 ```
 
 ```bash
-pip install -r requirements.txt 
+$ source venv/bin/activate
+```
+
+```bash
+(venv) $ pip install -r requirements.txt 
 ```
 
 Uruchomienie:
 ```bash
-flask run
+(venv) $ flask run
 ```
 
 
