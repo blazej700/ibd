@@ -19,10 +19,10 @@ Linux:
 $ source venv/bin/activate
 ```
 
-Windows
-```dos
+Windows:
+```
 venv\Scripts\activate
-``
+```
 
 
 ```bash
