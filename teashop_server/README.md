@@ -14,17 +14,17 @@ W katologu servera:
 ```bash
 $ python -m venv venv
 ```
+
 Linux:
 ```bash
 $ source venv/bin/activate
 ```
-
 Windows:
 ```
 venv\Scripts\activate
 ```
 
-
+Instalacja pakietów:
 ```bash
 (venv) $ pip install -r requirements.txt 
 ```
