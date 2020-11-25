@@ -8,9 +8,12 @@ class UserModel(Schema, db.Model):
     login = db.Column(db.String(20), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password = db.Column(db.String(128))
-    user_type = db.Column(db.String(20))
+    user_type = db.relationship('UserTypeModel', lazy='select', backref=db.backref('user', lazy='joined'))
+
 
     orders = db.relationship('OrderModel', secondary=user_order, lazy='subquery', backref=db.backref('user', lazy=True))
+
+    default_address = db.relationship('AddressModel', lazy='select', backref=db.backref('user', lazy='joined'))
 
 
     def serialize(self):
@@ -20,6 +23,7 @@ class UserModel(Schema, db.Model):
             'email': self.email,
             'password': self.password,
             'user_type' : self.user_type,
+            'default_address' : self.default_address,
             'orders' : [order.id for order in self.orders]
         }
 
@@ -40,5 +44,8 @@ class UserSchema(Schema):
             },
             'user_type': {
                 'type': 'string'
+            },
+            'default_address': {
+                'type': 'integer'
             },
         }
