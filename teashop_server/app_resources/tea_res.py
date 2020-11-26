@@ -2,6 +2,8 @@ from flask import Response, abort, jsonify, request
 from flask_restful_swagger_3 import Resource, swagger
 from flask_restful import reqparse
 from app_models.tea_model import TeaModel, TeaSchema
+from app_models.photo_model import PhotoModel
+from commons.error import Error
 from app import db
 
 class TeaRes(Resource):
@@ -15,7 +17,7 @@ class TeaRes(Resource):
         
         user = TeaModel.query.filter_by(id=tea_id).one_or_none()
         if user == None:
-            return "toDoblald"
+            return Error.getError(404, "Tea not found")
 
         response = jsonify(user.serialize())
         response.status_code = 200
@@ -25,8 +27,17 @@ class TeaRes(Resource):
     @swagger.tags(['Herbatka'])
     @swagger.reorder_with(TeaSchema, description="Post a tea")
     @swagger.expected(TeaSchema)   
+    @swagger.parameter(_in='header', name='Magic-key', description='Magic key',schema={'type': 'integer'},required=True)
     def post(self):
         json = request.get_json()
+
+        parser = reqparse.RequestParser()
+        parser.add_argument('Magic-key', type=int, location='headers')
+        magic_key = parser.parse_args().get('Magic-key')
+        print(magic_key)
+        if magic_key not in [1]:
+            return Error.getError(401, "Unauthorized")
+
 
         tea = TeaModel()
         tea.country = json['country']
@@ -35,13 +46,14 @@ class TeaRes(Resource):
         tea.stock = json['stock']
         tea.price = json['price']
         tea.tea_type = json['teaType']
-
+        tea.photo_id = 1
 
         try:
             db.session.add(tea)
             db.session.commit()
-        except Exception:
-            return "toDoblald"
+        except Exception as e:
+            #print(e)
+            return Error.getError(500, "Internal server eroror in database while adding tea")
 
 
         response = jsonify(tea.serialize())

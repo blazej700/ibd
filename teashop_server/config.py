@@ -8,7 +8,7 @@ class Config(object):
 class SwaggerConfig(object):
     TITLE ="Sklepiczek z herbacikami"
     DESCRIPTION="Guys that\'s the best shop with herbatki ^^. OMG OMG to API pozwala na wszystko, u know! W postach nie podawać IDków!!!"
-    VERSION="0.0.1"
+    VERSION="0.0.2"
     SWAGGER_URL = '/api/doc'
     API_URL = 'swagger.json'
         

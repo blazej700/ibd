@@ -5,6 +5,7 @@ from app_models.order_model import OrderModel, OrderPaginated
 from app_models.user_model import UserModel
 from app import db
 from sqlalchemy import or_, and_, desc
+from commons.error import Error
 
 class OrdersRes(Resource):
     @swagger.tags(['Zamówienia'])
@@ -14,7 +15,14 @@ class OrdersRes(Resource):
     @swagger.parameter(_in='query', name='pageNumber', description='Page number',schema={'type': 'integer'},required=True)
     @swagger.parameter(_in='query', name='sortBy', description='Sort teas by',schema={'type': 'string'},required=False)
     @swagger.parameter(_in='query', name='sortDirection', description='Sorts Direction',schema={'type': 'string'},required=False)
+    @swagger.parameter(_in='header', name='Magic-key', description='Magic key',schema={'type': 'integer'},required=True)
     def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('Magic-key', type=int, location='headers')
+        magic_key = parser.parse_args().get('Magic-key')
+        if magic_key not in [1,2]:
+            return Error.getError(401, "Unauthorized")
+        
         parser = reqparse.RequestParser()
         parser.add_argument('orderedBy', type=int, location='args')
         parser.add_argument('pageNumber', type=int, location='args')
@@ -29,7 +37,7 @@ class OrdersRes(Resource):
 
         ordered_by = UserModel.query.filter_by(id=ordered_by_id).one_or_none()
         if ordered_by == None:
-            return "toDoblald"
+            return Error.getError(404, "Order not found")
 
         order_name = {
             'id' : OrderModel.id,
