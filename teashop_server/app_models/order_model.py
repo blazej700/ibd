@@ -8,9 +8,15 @@ class OrderModel(db.Model):
     __tablename__ = 'order'
     id = db.Column(db.Integer, primary_key=True)
     details = db.Column(db.String(255))
-    status = db.Column(db.String(255)) 
-    address_id = db.Column('address_id', db.Integer, db.ForeignKey('address.id'))
 
+
+    #status = db.Column(db.String(255))
+
+    status_id = db.Column('status_id', db.Integer, db.ForeignKey('order_status.id'))
+    addres = db.relationship('OrderStatusModel', lazy='select', backref=db.backref('order', lazy='joined')) 
+
+
+    address_id = db.Column('address_id', db.Integer, db.ForeignKey('address.id'))
     address = db.relationship('AddressModel', lazy='select', backref=db.backref('order', lazy='joined'))
 
     teas = db.relationship('TeaModel', secondary=order_tea, lazy='subquery', backref=db.backref('order', lazy=True))
@@ -21,7 +27,7 @@ class OrderModel(db.Model):
         return {
             'id': self.id,
             'details': self.details,
-            'status': self.status,
+            'status': self.status.name,
             'address': self.address.serialize(),
             'teas': [tea.serialize() for tea in self.teas],
             'orderedBy': self.ordered_by[0].id if self.ordered_by[0] is not None else None
@@ -38,7 +44,7 @@ class OrderCreateSchema(Schema):
             'type': 'integer'
         },
         'status': {
-            'type': 'string'
+            'type': 'integer'
         },
         'details': {
             'type': 'string'
@@ -50,7 +56,13 @@ class OrderCreateSchema(Schema):
         'teaIds':IntegerSchema.array()
     }
 
-
+class OrderStatusSchema(Schema):
+    type = 'object'
+    properties = {
+        'status': {
+            'type': 'integer'
+        }
+        }
 
 class OrderSchema(Schema):
     type = 'object'

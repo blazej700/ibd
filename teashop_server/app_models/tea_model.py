@@ -11,6 +11,10 @@ class TeaModel(db.Model):
     descryption = db.Column(db.String(255))
     price = db.Column(db.Integer)
 
+    photo_id = db.Column('photo_id', db.Integer, db.ForeignKey('photos.id'))
+
+    photo = db.relationship('PhotoModel', lazy='select', backref=db.backref('tea', lazy='joined'))
+
     def serialize(self):
         return {
             'id': self.id,
