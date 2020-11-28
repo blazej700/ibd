@@ -1,0 +1,12 @@
+.main-frame {
+    float: left;
+    width: 80%;
+    height: calc(100% - 100px);
+    background: #EEE;
+}
+
+app-side-bar {
+    float: right;
+    height: calc(100% - 100px);
+    width: 20%;
+}
