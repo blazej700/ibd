@@ -35,10 +35,21 @@ class UserRes(Resource):
         user.email = json['email']
         user.login = json['login']
         user.password = json['password']
-        user.user_type = json['user_type']
+
+
+        if UserModel.query.filter(UserModel.login == json['login']).first():
+            return Error.getError(409, "login not unique")
+        if UserModel.query.filter(UserModel.email == json['email']).first():
+            return Error.getError(409, "email not unique")
+
+
+        user_type = UserTypeModel.query.filter_by(id=json['user_type']).one_or_none()
+        if user_type == None:
+            return Error.getError(404, "UserType not found")
+        user.user_type = user_type
 
         address = AddressModel()
-        json_address = json['address']
+        json_address = json['default_address']
         if 'id' in json_address:
             address = AddressModel.query.filter_by(id=json_address['id']).one_or_none()
             if address == None:
@@ -52,19 +63,20 @@ class UserRes(Resource):
             try:
                 db.session.add(address)
             except Exception:
-                return Error.getError(500, "Internal server eroror in database while adding user")
+                return Error.getError(500, "Internal server eroror in database while adding user address")
 
         user.address = address
 
         try:
             db.session.add(user)
             db.session.commit()
-        except Exception:
+        except Exception as e:
+            print(e)
             return Error.getError(500, "Internal server eroror in database while adding user")
 
 
         response = jsonify(user.serialize())
-        response.status_code = 200
+        response.status_code = 201
         return response
 
     @swagger.tags(['User']) 

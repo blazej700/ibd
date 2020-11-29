@@ -30,6 +30,6 @@ class LoginRes(Resource):
         else:
             return Error.getError(400, "Ok, I have a user, but now I need a password! I should made a limit for dump requests!!!")
 
-        response = jsonify({'key' : user.id, 'userType': user.user_type.user_type_name})
+        response = jsonify({'key' : user.user_type.id, 'userType': user.user_type.user_type_name})
         response.status_code = 200
         return response

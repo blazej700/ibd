@@ -1,6 +1,7 @@
 from app import db
 from flask_restful_swagger_3 import Schema
 from app_models.cross_tables import user_order
+from app_models.address_model import AddressSchema
 
 class UserModel(db.Model):
     __tablename__ = 'user'
@@ -24,8 +25,8 @@ class UserModel(db.Model):
             'login': self.login,
             'email': self.email,
             'password': self.password,
-            'user_type' : self.user_type_d,
-            'default_address' : self.address,
+            'user_type' : self.user_type.id,
+            'default_address' : self.address.serialize(),
             'orders' : [order.id for order in self.orders]
         }
 
@@ -48,8 +49,6 @@ class UserSchema(Schema):
                 'type': 'integer',
                 'description': '1 - admin, 2 - user'
             },
-            'default_address': {
-                'type': 'integer'
-            },
+            'default_address': AddressSchema,
         }
 
