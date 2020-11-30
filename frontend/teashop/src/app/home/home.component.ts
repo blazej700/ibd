@@ -1,3 +1,4 @@
+import { BackendApiService } from './../backend-api/backend-api.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  teas = [];
+
+  constructor(private backendApiService: BackendApiService) { }
 
   ngOnInit(): void {
+    this.backendApiService.getTeas(0, 100).subscribe(res => {
+      this.teas = res.items;
+    });
+  }
+
+  filterSelection(filters) {
+    this.backendApiService.getTeas(0, 100, filters).subscribe(res => {
+      console.log(res);
+      this.teas = res.items;
+    });
   }
 
 }

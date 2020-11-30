@@ -1,7 +1,16 @@
 .main-frame {
+    display: grid;
+    overflow: auto;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    grid-template-rows: auto;
+    grid-template-columns: repeat(2, 1fr);
+    grid-row-gap: 30px;
+    grid-column-gap: 1em;
     float: left;
-    width: 80%;
-    height: calc(100% - 100px);
+    width: calc(80% - 20px);
+    height: calc(100% - 120px);
     background: #EEE;
 }
 

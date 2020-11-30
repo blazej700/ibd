@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-side-bar',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SideBarComponent implements OnInit {
 
-  constructor() { }
+  @Output() selectionChange = new EventEmitter<any>();
+  filterFormGroup: FormGroup;
+
+  constructor(private formBuilder: FormBuilder,) { }
 
   ngOnInit(): void {
+    this.filterFormGroup = this.formBuilder.group({
+      teaType: ['', [Validators.required]],
+      country: ['', [Validators.required]],
+      minPrice: [null, [Validators.required]],
+      maxPrice: [null, [Validators.required]],
+    });
   }
 
+  emitSelection() {
+    this.selectionChange.emit(this.filterFormGroup.value);
+  }
 }

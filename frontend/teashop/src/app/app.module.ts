@@ -1,7 +1,7 @@
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -14,6 +14,11 @@ import { ProductComponent } from './home/product/product.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { LoginComponent } from './login/login.component';
 import { OrdersListComponent } from './orders-list/orders-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { NewOrderComponent } from './new-order/new-order.component';
 
 @NgModule({
   declarations: [
@@ -26,13 +31,19 @@ import { OrdersListComponent } from './orders-list/orders-list.component';
     ProductComponent,
     ProductDetailsComponent,
     LoginComponent,
-    OrdersListComponent
+    OrdersListComponent,
+    AdminPanelComponent,
+    NewOrderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MatIconModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatSnackBarModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

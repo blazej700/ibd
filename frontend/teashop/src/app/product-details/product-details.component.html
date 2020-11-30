@@ -2,29 +2,26 @@
     <div class="login-box">
         <div class="wrapper">
             <div style="width: 45%; margin-right: 30px; background: #EEE;">
-                Herbata
+                <img style="width: 100%; height: 100%;" id="img" src="" alt="">
             </div>
             <div class="details">
-                <h3>Herbata Pepiki</h3>
+                <h3>{{tea.name}}</h3>
                 <span>Kraj pochodzenia: </span>
-                <span>Czechy</span>
+                <span>{{tea.country}}</span>
                 <br>
                 <span>Typ: </span>
-                <span>Czarna</span>
+                <span>{{tea.tea_type}}</span>
                 <br>
                 <span>Dostępność w magazynie: </span>
-                <span>15</span>
+                <span>{{tea.stock}}</span>
                 <div style="display: flex;">
-                    <div class="cost">28.66 pln</div>
-                    <button>Dodaj</button>
+                    <div class="cost">{{tea.price}} pln</div>
+                    <button (click)="test()">Dodaj</button>
                 </div>
             </div>
         </div>
         <div class="description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Id harum veniam voluptatum dolore perspiciatis voluptates suscipit, rerum aspernatur dicta assumenda libero saepe earum nisi cupiditate error tempore quam dolorum amet? Lorem ipsum dolor sit amet
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Id harum veniam voluptatum dolore perspiciatis voluptates suscipit, rerum aspernatur dicta assumenda libero saepe earum nisi cupiditate error tempore quam dolorum amet? consectetur adipisicing
-            elit. Id harum veniam voluptatum dolore perspiciatis voluptates suscipit, rerum aspernatur dicta assumenda libero saepe earum nisi cupiditate error tempore quam dolorum amet? Lorem ipsum dolor sit amet consectetur adipisicing elit. Id harum
-            veniam voluptatum dolore perspiciatis voluptates suscipit, rerum aspernatur dicta assumenda libero saepe earum nisi cupiditate error tempore quam dolorum amet?
+            {{tea.descryption}}
         </div>
     </div>
 </div>
