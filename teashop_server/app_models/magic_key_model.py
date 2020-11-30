@@ -5,5 +5,11 @@ class KeySchema(Schema):
     properties = {
         'key': {
             'type': 'integer'
-        }
+        },
+        'userType': {
+            'type': 'integer'
+            },
+        "userId": {
+            'type': 'integer'
+            }
     }

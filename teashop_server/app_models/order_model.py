@@ -13,7 +13,7 @@ class OrderModel(db.Model):
     #status = db.Column(db.String(255))
 
     status_id = db.Column('status_id', db.Integer, db.ForeignKey('order_status.id'))
-    addres = db.relationship('OrderStatusModel', lazy='select', backref=db.backref('order', lazy='joined')) 
+    status = db.relationship('OrderStatusModel', lazy='select', backref=db.backref('order', lazy='joined')) 
 
 
     address_id = db.Column('address_id', db.Integer, db.ForeignKey('address.id'))
