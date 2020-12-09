@@ -59,9 +59,8 @@ class OrdersRes(Resource):
                 .order_by(order_query) \
                 .paginate(page=page_number, per_page=per_page, error_out=False, max_per_page=1500)
         else:
-            orders_paginator = OrderModel \
+            orders_paginator = OrderModel.query.filter() \
                 .order_by(order_query) \
-                .all() \
                 .paginate(page=page_number, per_page=per_page, error_out=False, max_per_page=1500)
 
 

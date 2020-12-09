@@ -6,6 +6,7 @@ from app_models.photo_model import PhotoModel
 from app_models.ordered_teas import OrderedTeas
 from commons.error import Error
 from app import db
+import random
 
 class TeaRes(Resource):
     @swagger.tags(['Herbatka'])
@@ -47,7 +48,7 @@ class TeaRes(Resource):
         tea.stock = json['stock']
         tea.price = json['price']
         tea.tea_type = json['teaType']
-        tea.photo_id = 1
+        tea.photo_id =  random.randrange(1, 8)
 
         try:
             db.session.add(tea)
