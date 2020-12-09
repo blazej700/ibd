@@ -1,3 +1,4 @@
+from app_models.ordered_teas import OrderedTeas
 from app_models.tea_model import TeaModel
 from flask import Response, abort, jsonify, request
 from flask_restful_swagger_3 import Resource, swagger
@@ -75,8 +76,14 @@ class OrderRes(Resource):
 
         order.ordered_by = [user]
 
-        order.teas = []
-        [order.teas.append(TeaModel.query.filter_by(id=tea_id).one_or_none()) for tea_id in  json['teaIds']]
+        order.ordered_teas = []
+        #[order.teas.append(TeaModel.query.filter_by(id=tea_id).one_or_none()) for tea_id in  json['teaIds']]
+
+        for ordered_tea_json in json['orderedTeas']:
+            ordered_tea = OrderedTeas()
+            ordered_tea.tea_id = ordered_tea_json["teaId"]
+            ordered_tea.quantity = ordered_tea_json["quantity"]
+            order.ordered_teas.append(ordered_tea)
 
         try:
             db.session.add(order)
