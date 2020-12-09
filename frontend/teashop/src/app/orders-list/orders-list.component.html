@@ -1,0 +1,19 @@
+<div class="main-frame">
+    <div class="login-box">
+        <h1>Zamówienia</h1>
+        <div class="title-row">
+            <div class="title-cell">Nr Zamówienia</div>
+            <div class="title-cell">Status</div>
+            <div class="title-cell">Cena</div>
+            <div class="title-cell">Szczegóły</div>
+        </div>
+        <div *ngFor="let order of orders" class="normal-row">
+            <div class="normal-cell">{{order.id}}</div>
+            <div class="normal-cell">{{order.status}}</div>
+            <div class="normal-cell">{{getOrderCost(order)}}</div>
+            <div class="normal-cell">
+                <button style="vertical-align: middle;" (click)="test()">Szczegóły</button>
+            </div>
+        </div>
+    </div>
+</div>

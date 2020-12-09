@@ -1,0 +1,40 @@
+<div class="main-frame">
+    <div class="login-box" [formGroup]="orderDetailsFormGroup">
+        <h1>Zamówienie</h1>
+        <div class="title-row">
+            <div class="title-cell" style="width: 50%;">Produkt</div>
+            <div class="title-cell">Ilość</div>
+            <div class="title-cell">Cena</div>
+        </div>
+        <div class="table">
+            <div class="normal-row" *ngFor="let tea of teas">
+                <div class="normal-cell" style="width: 50%;">{{tea.name}}</div>
+                <div class="normal-cell">
+                    <input type="number" value="1">
+                </div>
+                <div class="normal-cell">{{tea.price}}</div>
+            </div>
+        </div>
+
+        <h3 style="width: 95%;;text-align: right;">Suma: {{orderPrice()}} pln</h3>
+
+        <h1 style="margin-top: 20px;">Szczegóły zamówenia</h1>
+        <div class="flex-wrapper" style="margin-top: 60px;">
+            <h3>Ulica:</h3>
+            <input type="text" formControlName="street">
+
+            <h3 style="width: 180px; margin-left: 50px;">Numer:</h3>
+            <input type="text" formControlName="number">
+        </div>
+        <div class="flex-wrapper" style="margin-top: 30px;">
+            <h3>Miasto:</h3>
+            <input type="text" formControlName="city">
+
+            <h3 style="width: 180px;margin-left: 50px;">Kod pocztowy:</h3>
+            <input type="text" formControlName="postal_code">
+        </div>
+        <h3 style="margin-top: 10px;">Dodatkowe Informacje</h3>
+        <textarea cols="60" rows="8" formControlName="details"></textarea>
+        <button (click)="makeOrder()">Zamów</button>
+    </div>
+</div>

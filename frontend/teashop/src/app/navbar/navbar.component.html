@@ -1,0 +1,16 @@
+<div class="navbar">
+    <h1 [routerLink]="['']" routerLinkActive="router-link-active">
+        HerbatySklep
+    </h1>
+    <div class="logged" (click)="loggedUserTagClicked()">
+        <span *ngIf="!currentUser.id">Niezalogowany</span>
+        <span *ngIf="currentUser.id">{{currentUser.login}}</span>
+    </div>
+    <div class="cart" [routerLink]="['/new-order']" routerLinkActive="router-link-active" *ngIf="currentUser.id">
+        <div *ngIf="currentOrder.teas.length !== 0">{{currentOrder.teas.length}}</div>
+        <mat-icon>shopping_cart_outline</mat-icon>
+    </div>
+    <div *ngIf="currentUser.id">
+        <mat-icon id="exit" (click)="logout()">exit_to_app</mat-icon>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="main-frame">
+    <div class="login-box" [formGroup]="userFormGroup">
+        <h1>Rejestracja</h1>
+
+        <h3 style="margin-top: 30px;">Login</h3>
+        <input type="text" formControlName="login">
+
+        <h3>Email</h3>
+        <input type="text" formControlName="email">
+
+        <h3>Hasło</h3>
+        <input type="password" formControlName="password">
+
+        <h3>Powtórz hasło</h3>
+        <input type="password" formControlName="passwordConfirmed">
+
+        <br>
+        <input type="checkbox" style="margin-top: 20px;" formControlName="accept">
+        <span style="font-size: 16px;">Zapoznałem się z regulaminem sklepu</span>
+        <br>
+
+        <button (click)="submitUser()">Stwórz konto</button>
+    </div>
+</div>

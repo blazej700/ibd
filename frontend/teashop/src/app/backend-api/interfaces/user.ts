@@ -1,0 +1,9 @@
+export interface User {
+    id?: number;
+    login?: string;
+    email?: string;
+    password?: string;
+    user_type?: number;
+    default_address?: any;
+
+}

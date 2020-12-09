@@ -1,0 +1,27 @@
+<div class="main-frame" [formGroup]="filterFormGroup" (change)="emitSelection()">
+    <h1>Typ</h1>
+    <select id="cars" formControlName="teaType">
+        <option value="">------------</option>
+        <option value="saab">Saab</option>
+        <option value="opel">Opel</option>
+        <option value="audi">Audi</option>
+      </select>
+    <h1 style="margin-top: 30px;">Kraj pochodzenia</h1>
+    <select id="cars" formControlName="country">
+        <option value="">------------</option>
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="opel">Opel</option>
+        <option value="audi">Audi</option>
+      </select>
+    <h1 style="margin-top: 30px;">Cena</h1>
+    <div class="cost">
+        <span>od:</span>
+        <input type="number" formControlName="minPrice">
+        <span>pln</span>
+        <br>
+        <span>do:</span>
+        <input type="number" formControlName="maxPrice">
+        <span>pln</span>
+    </div>
+</div>
