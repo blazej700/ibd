@@ -10,7 +10,7 @@ from commons.error import Error
 class OrdersRes(Resource):
     @swagger.tags(['Zamówienia'])
     @swagger.reorder_with(OrderPaginated, description="Finds all maching orders")    
-    @swagger.parameter(_in='query', name='orderedBy', description='Tea Name',schema={'type': 'integer'},required=True)
+    @swagger.parameter(_in='query', name='orderedBy', description='Tea Name',schema={'type': 'integer'},required=False)
     @swagger.parameter(_in='query', name='perPage', description='Number of teas per page',schema={'type': 'integer'},required=True)
     @swagger.parameter(_in='query', name='pageNumber', description='Page number',schema={'type': 'integer'},required=True)
     @swagger.parameter(_in='query', name='sortBy', description='Sort teas by',schema={'type': 'string'},required=False)
@@ -35,10 +35,7 @@ class OrdersRes(Resource):
         sort_by = parser.parse_args().get('sortBy')
         sort_dir = parser.parse_args().get('sortDirection') if parser.parse_args().get('sortDirection') in ['inc', 'desc'] else 'inc'
 
-        ordered_by = UserModel.query.filter_by(id=ordered_by_id).one_or_none()
-        if ordered_by == None:
-            return Error.getError(404, "Order not found")
-
+        
         order_name = {
             'id' : OrderModel.id,
             'status' : OrderModel.status,
@@ -51,9 +48,21 @@ class OrdersRes(Resource):
                 'desc' : desc(order_name[sort_by])
             }[sort_dir]
 
-        orders_paginator = OrderModel.query.filter(OrderModel.ordered_by.contains(ordered_by)) \
-            .order_by(order_query) \
-            .paginate(page=page_number, per_page=per_page, error_out=False, max_per_page=1500)
+        orders_paginator = None
+
+        if ordered_by_id is not None:
+            ordered_by = UserModel.query.filter_by(id=ordered_by_id).one_or_none()
+            if ordered_by == None:
+                return Error.getError(404, "Order not found")
+
+            orders_paginator = OrderModel.query.filter(OrderModel.ordered_by.contains(ordered_by)) \
+                .order_by(order_query) \
+                .paginate(page=page_number, per_page=per_page, error_out=False, max_per_page=1500)
+        else:
+            orders_paginator = OrderModel.query.filter() \
+                .order_by(order_query) \
+                .paginate(page=page_number, per_page=per_page, error_out=False, max_per_page=1500)
+
 
         orders = []
         [orders.append(order.serialize()) for order in orders_paginator.items]
