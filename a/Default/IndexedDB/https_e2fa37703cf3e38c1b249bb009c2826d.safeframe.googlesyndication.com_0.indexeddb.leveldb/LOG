@@ -1,5 +1,0 @@
-2020/11/29-15:10:02.357 18858 Reusing MANIFEST /home/dk/Desktop/internetoweBazyDanych/ibd/a/Default/IndexedDB/https_e2fa37703cf3e38c1b249bb009c2826d.safeframe.googlesyndication.com_0.indexeddb.leveldb/MANIFEST-000001
-2020/11/29-15:10:08.330 18858 Level-0 table #5: started
-2020/11/29-15:10:08.332 18858 Level-0 table #5: 439 bytes OK
-2020/11/29-15:10:08.333 18858 Delete type=0 #3
-2020/11/29-15:10:08.334 18858 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

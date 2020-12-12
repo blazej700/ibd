@@ -1,6 +1,0 @@
-2020/12/10-21:14:15.428 1c0f3 Reusing MANIFEST /home/dk/Desktop/internetoweBazyDanych/ibd/a/Default/Local Storage/leveldb/MANIFEST-000001
-2020/12/10-21:14:15.428 1c0f3 Recovering log #15
-2020/12/10-21:14:15.429 1c0f3 Reusing old log /home/dk/Desktop/internetoweBazyDanych/ibd/a/Default/Local Storage/leveldb/000015.log 
-2020/12/11-09:50:40.577 20377 Level-0 table #20: started
-2020/12/11-09:50:40.580 20377 Level-0 table #20: 30915 bytes OK
-2020/12/11-09:50:40.581 20377 Delete type=0 #15
