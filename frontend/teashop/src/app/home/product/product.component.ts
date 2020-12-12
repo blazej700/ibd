@@ -1,3 +1,5 @@
+import { LoggedUser } from './../../classes/logged-user';
+import { UserService } from './../../services/user.service';
 import { OrderService } from './../../services/order.service';
 import { ProductDetailsComponent } from './../../product-details/product-details.component';
 import { Component, Input, OnInit } from '@angular/core';
@@ -13,26 +15,32 @@ import { Order } from 'src/app/classes/order';
 export class ProductComponent implements OnInit {
 
   @Input() tea: any;
+  @Input() index: any;
   img: any;
   currentOrder: Order;
+  currentUser: LoggedUser;
 
   constructor(private backendApiService: BackendApiService,
     private dialog: MatDialog,
+    private userService: UserService,
     private orderService: OrderService) { }
 
   ngOnInit(): void {
     this.backendApiService.getPhoto(this.tea).subscribe(res => {
-      console.log(res);
       var arrayBufferView = new Uint8Array(res);
       var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
       var urlCreator = window.URL || window.webkitURL;
       var imageUrl = urlCreator.createObjectURL(blob);
-      const img = document.getElementById('img') as HTMLImageElement;
+      const img = document.getElementById('img' + this.index) as HTMLImageElement;
       img.src = imageUrl;
       this.img = imageUrl;
     });
-    this.orderService.currentOrder.subscribe(value => this.currentOrder = value);
-
+    this.userService.getUser().subscribe(value => {
+      this.currentUser = value;
+      if (this.currentUser.id) {
+        this.orderService.getOrder().subscribe(v => this.currentOrder = v);
+      }
+    });
   }
 
   openDetailsDialog() {
@@ -42,7 +50,13 @@ export class ProductComponent implements OnInit {
   }
 
   addToOrder(teaId: number) {
-    this.currentOrder.teas.push(teaId);
+    const tea = this.currentOrder.teas.find(el => el.teaId === teaId);
+    if (tea) {
+      tea.quantity++;
+    } else {
+      this.currentOrder.teas.push({ teaId: teaId, quantity: 1 });
+    }
+    localStorage.setItem('currentOrder', JSON.stringify(this.currentOrder));
   }
 
 }

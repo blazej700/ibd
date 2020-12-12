@@ -20,9 +20,7 @@ export class HomeComponent implements OnInit {
 
   filterSelection(filters) {
     this.backendApiService.getTeas(0, 100, filters).subscribe(res => {
-      console.log(res);
       this.teas = res.items;
     });
   }
-
 }

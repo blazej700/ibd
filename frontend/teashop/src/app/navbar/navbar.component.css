@@ -57,6 +57,10 @@ h1:hover {
     margin-left: 30px;
 }
 
+#storage {
+    margin-left: 30px;
+}
+
 mat-icon {
     cursor: pointer;
     color: white;

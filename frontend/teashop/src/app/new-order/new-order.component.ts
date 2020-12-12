@@ -6,6 +6,8 @@ import { OrderService } from './../services/order.service';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { identifierModuleUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-new-order',
@@ -23,7 +25,8 @@ export class NewOrderComponent implements OnInit {
     private backendApiService: BackendApiService,
     private router: Router,
     private userService: UserService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private infoSnackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.orderDetailsFormGroup = this.formBuilder.group({
@@ -31,22 +34,31 @@ export class NewOrderComponent implements OnInit {
       city: ['', [Validators.required]],
       number: ['', [Validators.required]],
       postal_code: ['', [Validators.required]],
-      details: ['', [Validators.required]],
+      details: [''],
     });
-    this.orderService.currentOrder.subscribe(value => {
+    this.orderService.getOrder().subscribe(value => {
       this.currentOrder = value;
-      this.currentOrder.teas.forEach(teaId => this.backendApiService.getTea(teaId).subscribe(res => this.teas.push(res)));
+      this.currentOrder.teas.forEach(tea => this.backendApiService.getTea(tea.teaId).subscribe(res => this.teas.push(res)));
     });
-    this.userService.currentUser.subscribe(value => this.currentUser = value);
+    this.userService.getUser().subscribe(value => this.currentUser = value);
   }
 
   orderPrice() {
     let sum = 0;
-    this.teas.forEach(tea => sum += tea.price);
+    this.teas.forEach(tea => {
+      sum += tea.price * this.currentOrder.teas.find(el => el.id = tea.id).quantity;
+    });
     return sum;
   }
 
   makeOrder() {
+    if (!this.orderDetailsFormGroup.valid) {
+      this.infoSnackBar.open('Uzupełnij wszystkie wymagane pola', '', {
+        duration: 8000,
+      });
+      
+      return;
+    }
     this.currentOrder.address = {
       street: this.orderDetailsFormGroup.get('street').value,
       country: 'Polska',
@@ -61,5 +73,14 @@ export class NewOrderComponent implements OnInit {
       this.backendApiService.getUser(this.currentUser.id).subscribe(value => this.currentUser.orders = value.orders);
       this.router.navigate(['/orders-list']);
     });
+  }
+
+  quantityChanged(index: number, value: number) {
+    this.currentOrder.teas[index].quantity = value;
+    if (this.currentOrder.teas[index].quantity == 0) {
+      this.currentOrder.teas.splice(index, 1);
+      this.teas.splice(index, 1);
+    }
+    localStorage.setItem('currentOrder', JSON.stringify(this.currentOrder));
   }
 }

@@ -1,12 +1,12 @@
 .main-frame {
-    height: calc(100% - 220px);
-    padding-top: 120px;
+    height: calc(100% - 140px);
+    padding-top: 40px;
     background: #EEE;
 }
 
 .login-box {
     width: 800px;
-    height: 650px;
+    height: 700px;
     margin: auto;
     padding: 40px 0px 0px 30px;
     border: 2px solid #CCC;
@@ -24,6 +24,11 @@ h3 {
     font-weight: 500;
 }
 
+input {
+    width: 180px;
+    font-size: 18px;
+}
+
 .flex-wrapper {
     display: flex;
 }
@@ -32,9 +37,52 @@ h3 {
     width: 140px;
 }
 
-.table-header {
+.title-row {
+    height: 40px;
     display: flex;
-    border: 2px solid #AAA;
+    border-bottom: 3px solid lightgray;
 }
 
-.header-cell {}
+.title-cell {
+    width: 25%;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 40px;
+}
+
+.normal-row {
+    height: 40px;
+    display: flex;
+    border-bottom: 1px solid lightgray;
+}
+
+.normal-cell {
+    width: 25%;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 40px;
+}
+
+.table {
+    overflow: auto;
+    height: 140px;
+}
+
+button {
+    cursor: pointer;
+    float: right;
+    width: 180px;
+    height: 40px;
+    margin-top: 85px;
+    margin-right: 20px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    background: orange;
+    border: none;
+}

@@ -26,8 +26,8 @@ export class NavbarComponent implements OnInit {
     private orderService: OrderService) { }
 
   ngOnInit(): void {
-    this.userService.currentUser.subscribe(value => this.currentUser = value);
-    this.orderService.currentOrder.subscribe(value => this.currentOrder = value);
+    this.userService.getUser().subscribe(value => this.currentUser = value);
+    this.orderService.getOrder().subscribe(value => this.currentOrder = value);
   }
 
   loggedUserTagClicked() {
@@ -42,12 +42,19 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  navigateAdminPanel(){
+    this.router.navigate(['/admin-panel']);
+  }
+
   logout() {
     this.backendApiService.key = undefined;
+    this.router.navigate(['/login']);
     this.userService.setUser(new LoggedUser());
+    this.orderService.setOrder(new Order());
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('currentOrder');
     this.infoSnackBar.open('Wylogowano pomyslnie', '', {
       duration: 5000,
     });
-    this.router.navigate(['/login']);
   }
 }

@@ -11,6 +11,9 @@
         <mat-icon>shopping_cart_outline</mat-icon>
     </div>
     <div *ngIf="currentUser.id">
+        <mat-icon *ngIf="currentUser.user_type === 1" id="storage" (click)="navigateAdminPanel()">storage</mat-icon>
+    </div>
+    <div *ngIf="currentUser.id">
         <mat-icon id="exit" (click)="logout()">exit_to_app</mat-icon>
     </div>
 </div>

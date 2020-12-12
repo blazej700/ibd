@@ -1,1 +1,47 @@
-<p>admin-panel works!</p>
+<h1>Panel Administracyjny</h1>
+<div style="display: flex; height: 65%; margin-left: 140px; margin-top: 30px;">
+    <div class="seciton">
+        <h2 style="text-align: center;">Produkty</h2>
+        <div class="tab">
+            <div class="row" *ngFor="let product of products">
+                <div style="margin-left: 10px;width: 50px;line-height: 50px;">{{product.id}}</div>
+                <div style="margin-left: 10px;width: 200px;line-height: 50px;">{{product.name}}</div>
+                <div style="margin-left: 10px;width: 100px;line-height: 50px;">{{product.stock}}</div>
+                <button style="margin-left: 110px; width: 70px;" (click)="editProduct(product)">Edytuj</button>
+                <button style="margin-left: 25px;width: 70px;" (click)="deleteProduct(product)">Usuń</button>
+            </div>
+            <div class="row" id="add-product" (click)="addProduct()">
+                DODAJ PRODUKT
+            </div>
+        </div>
+        <div style="display: flex; height: 23px; margin-top: 15px;">
+            ilość elementów na stronie <input (input)="getProducts()" id="product-number" type="number" style="margin-left: 10px;text-align: center" [(ngModel)]="productsResp.perPage">
+        </div>
+        <div style="display: flex; height: 23px; margin-top: 15px;">
+            strona <input id="product-page" (input)="getProducts()" style="margin-left: 10px; margin-right: 10px; text-align: center;" type="number" [(ngModel)]="productsResp.page"> z {{productsResp.pages}}
+        </div>
+    </div>
+
+    <div class="seciton" style="margin-left: 100px;">
+        <h2 style="text-align: center;">Zamówienia</h2>
+        <div class="tab">
+            <div class="row" *ngFor="let order of orders">
+                <div style="margin-left: 10px;width: 50px;line-height: 50px;">{{order.id}}</div>
+                <div style="margin-left: 10px;width: 200px;line-height: 50px;">{{order.orderedBy}}</div>
+                <select name="status" id="status">
+                    <option value="0" selected hidden>{{order.status}}</option>
+                    <option value="1">Created</option>
+                    <option value="2">Send</option>
+                    <option value="3">Delivered</option>
+                  </select>
+                <button style="margin-left: 110px; width: 140px;" (click)="changeStatus(order)">Zapisz status</button>
+            </div>
+        </div>
+        <div style="display: flex; height: 23px; margin-top: 15px;">
+            ilość elementów na stronie <input (input)="getOrders()" id="product-number" type="number" style="margin-left: 10px;text-align: center" [(ngModel)]="ordersResp.perPage">
+        </div>
+        <div style="display: flex; height: 23px; margin-top: 15px;">
+            strona <input id="product-page" (input)="getOrders()" style="margin-left: 10px; margin-right: 10px; text-align: center;" type="number" [(ngModel)]="ordersResp.page"> z {{ordersResp.pages}}
+        </div>
+    </div>
+</div>

@@ -4,8 +4,8 @@
     <button [routerLink]="['/register']" routerLinkActive="router-link-active">register</button>
     <button [routerLink]="['/order']" routerLinkActive="router-link-active">order</button>
     <button [routerLink]="['/orders-list']" routerLinkActive="router-link-active">orders-list</button> -->
-    <div *ngFor="let tea of teas">
-        <app-product [tea]="tea" style="margin-top: 20px; margin-left: 10p;"></app-product>
+    <div class="cell" *ngFor="let tea of teas; let i = index">
+        <app-product [tea]="tea" [index]="i" style="margin-top: 20px; margin-left: 10p; "></app-product>
     </div>
 </div>
-<app-side-bar (selectionChange)="filterSelection($event)"></app-side-bar>
+<app-side-bar (selectionChange)="filterSelection($event) "></app-side-bar>

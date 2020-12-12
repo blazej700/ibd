@@ -42,8 +42,8 @@ export class LoginComponent implements OnInit {
   submitLogin(): void {
     this.backendApiService.postLogin(this.login.value, this.password.value).subscribe(res => {
       this.backendApiService.key = res.key;
+      localStorage.setItem('key', JSON.stringify(res.key));
       this.backendApiService.getUser(res.userId).subscribe(r => {
-        console.log(r);
         const newUser = new LoggedUser();
         newUser.id = r.id,
           newUser.default_address = r.default_address,

@@ -14,11 +14,12 @@ import { ProductComponent } from './home/product/product.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { LoginComponent } from './login/login.component';
 import { OrdersListComponent } from './orders-list/orders-list.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { NewOrderComponent } from './new-order/new-order.component';
+import { EditProductComponent } from './admin-panel/edit-product/edit-product.component';
 
 @NgModule({
   declarations: [
@@ -33,11 +34,13 @@ import { NewOrderComponent } from './new-order/new-order.component';
     LoginComponent,
     OrdersListComponent,
     AdminPanelComponent,
-    NewOrderComponent
+    NewOrderComponent,
+    EditProductComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     MatIconModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,

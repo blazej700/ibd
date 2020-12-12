@@ -29,6 +29,18 @@ export class RegisterComponent implements OnInit {
   }
 
   submitUser(): void {
+    if(!this.userFormGroup.valid){
+      this.infoSnackBar.open('Uzupełnij wszystkie wymagane pola', '', {
+        duration: 8000,
+      });
+      return;
+    }
+    if(this.userFormGroup.get('password').value !== this.userFormGroup.get('passwordConfirmed').value){
+      this.infoSnackBar.open('Podane hasła muszą być jednakowe', '', {
+        duration: 8000,
+      });
+      return;
+    }
     if(this.userFormGroup.get('accept').value){
       this.backendApiService.postUser(this.userFormGroup.value).subscribe(res => {
         this.router.navigate(['/login']);

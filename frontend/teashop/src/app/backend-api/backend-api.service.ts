@@ -30,31 +30,58 @@ export class BackendApiService {
     return this.http.get<any>(this.rootUrl + '/photo/' + tea.id, { params, responseType: 'arraybuffer' as 'json' });
   }
 
-  postOrder(order: Order, user: LoggedUser ) {
+  putOrder(order) {
+    if (!this.key) {
+      this.key = JSON.parse(localStorage.getItem('key'));
+    }
+    const headers = new HttpHeaders().set('Magic-key', this.key.toString());
+    let params = new HttpParams().set('order_id', order.id.toString());
+    const body = {
+      status: order.status,
+      details: order.details,
+      orderedBy: order.orderedBy,
+      address: order.address,
+      orderedTeas: order.ordered_teas
+    };
+    return this.http.put<any>(this.rootUrl + '/order', body, { params, headers });
+  }
+
+  postOrder(order: Order, user: LoggedUser) {
+    if (!this.key) {
+      this.key = JSON.parse(localStorage.getItem('key'));
+    }
     const headers = new HttpHeaders().set('Magic-key', this.key.toString());
     const body = {
       status: 1,
       details: order.details,
       orderedBy: user.id,
       address: order.address,
-      teaIds: order.teas
+      orderedTeas: order.teas
     };
-    return this.http.post<any>(this.rootUrl + '/order', body, {headers});
+    return this.http.post<any>(this.rootUrl + '/order', body, { headers });
   }
 
-  getOrder(orderId){
+  getOrder(orderId) {
+    if (!this.key) {
+      this.key = JSON.parse(localStorage.getItem('key'));
+    }
     const headers = new HttpHeaders().set('Magic-key', this.key.toString());
     let params = new HttpParams()
       .set('order_id', orderId.toString());
     return this.http.get<any>(this.rootUrl + '/order', { params, headers });
   }
 
-  getOrders(userId: number, pageNumber: number, perPage: number,){
+  getOrders(pageNumber: number, perPage: number, userId?: number) {
+    if (!this.key) {
+      this.key = JSON.parse(localStorage.getItem('key'));
+    }
     const headers = new HttpHeaders().set('Magic-key', this.key.toString());
     let params = new HttpParams()
       .set('pageNumber', pageNumber.toString())
-      .set('perPage', perPage.toString())
-      .set('orderedBy', userId.toString());
+      .set('perPage', perPage.toString());
+    if (userId) {
+      params = params.set('orderedBy', userId.toString());
+    }
     return this.http.get<any>(this.rootUrl + '/orders', { params, headers });
   }
 
@@ -62,6 +89,32 @@ export class BackendApiService {
     let params = new HttpParams()
       .set('tea_id', teaId.toString());
     return this.http.get<any>(this.rootUrl + '/tea', { params });
+  }
+
+  putTea(teaId: number, body) {
+    if (!this.key) {
+      this.key = JSON.parse(localStorage.getItem('key'));
+    }
+    const headers = new HttpHeaders().set('Magic-key', this.key.toString());
+    let params = new HttpParams().set('tea_id', teaId.toString());
+    return this.http.put<any>(this.rootUrl + '/tea', body, { params, headers });
+  }
+
+  postTea(body) {
+    if (!this.key) {
+      this.key = JSON.parse(localStorage.getItem('key'));
+    }
+    const headers = new HttpHeaders().set('Magic-key', this.key.toString());
+    return this.http.post<any>(this.rootUrl + '/tea', body, { headers });
+  }
+
+  deleteTea(tea_id: number) {
+    if (!this.key) {
+      this.key = JSON.parse(localStorage.getItem('key'));
+    }
+    const headers = new HttpHeaders().set('Magic-key', this.key.toString());
+    let params = new HttpParams().set('tea_id', tea_id.toString());
+    return this.http.delete<any>(this.rootUrl + '/tea', { params, headers });
   }
 
   getTeas(pageNumber: number, perPage: number, filters?: any) {
